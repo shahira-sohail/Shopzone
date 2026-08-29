@@ -1,31 +1,32 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 
-export const AuthContext = createContext();
+const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-  const [isLoggedIn, setIsLoggedIn] = useState(() => {
-    return localStorage.getItem("isLoggedIn") === "true";
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    const savedAuth = localStorage.getItem("shopzone-auth");
+    return savedAuth === "true";
   });
 
   useEffect(() => {
     localStorage.setItem(
-      "isLoggedIn",
-      isLoggedIn
+      "shopzone-auth",
+      isAuthenticated.toString()
     );
-  }, [isLoggedIn]);
+  }, [isAuthenticated]);
 
-  function loginAsGuest() {
-    setIsLoggedIn(true);
-  }
+  const loginAsGuest = () => {
+    setIsAuthenticated(true);
+  };
 
-  function logout() {
-    setIsLoggedIn(false);
-  }
+  const logout = () => {
+    setIsAuthenticated(false);
+  };
 
   return (
     <AuthContext.Provider
       value={{
-        isLoggedIn,
+        isAuthenticated,
         loginAsGuest,
         logout,
       }}
@@ -33,4 +34,8 @@ export function AuthProvider({ children }) {
       {children}
     </AuthContext.Provider>
   );
+}
+
+export function useAuth() {
+  return useContext(AuthContext);
 }
