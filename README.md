@@ -1,4 +1,4 @@
-# 🛍️ ShopZone
+# 🛍️ ShopZone(Sprint06)
 
 ShopZone is a modern, responsive Single Page E-Commerce application built using React.js. It allows users to browse products, view detailed product information, manage a global shopping cart, and access protected checkout functionality without full-page browser reloads.
 
